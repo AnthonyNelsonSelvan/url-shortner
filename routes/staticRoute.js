@@ -4,7 +4,7 @@ const URL = require("../model/url")
 
 const router = express.Router()
 
-router.post("/url", handleCreateShortUrl)
+
 router.get("/success", async (req,res) => {
     const allUrl = await URL.find({})
     const {id} =req.query;

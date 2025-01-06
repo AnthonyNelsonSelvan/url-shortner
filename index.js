@@ -17,7 +17,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 //routes
-app.use("/shortUrl", urlRouter)
+app.use("/url", urlRouter)
 app.use("/", staticRoute)
 
 //view engine
