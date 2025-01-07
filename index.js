@@ -8,6 +8,7 @@ const path = require("path")
 const connectMongoose = require("./connection/url")
 const urlRouter = require("./routes/url")
 const staticRoute = require("./routes/staticRoute")
+const userRoute = require("./routes/user")
 
 //function from connection folder
 connectMongoose("mongodb://127.0.0.1:27017/url-shortner")
@@ -19,6 +20,7 @@ app.use(express.urlencoded({extended: false}))
 //routes
 app.use("/url", urlRouter)
 app.use("/", staticRoute)
+app.use("/user", userRoute)
 
 //view engine
 app.set("view engine", "ejs")

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login to url Shortener</title>
+</head>
+<body>
+    <h2>Login page</h2>
+
+    <form action="\user\login" method="post">
+        <label for="email">Email :</label>
+        <input placeholder="abc12@xmail.com" type="text" name="email" required\><br>
+        <label for="password">password :</label>
+        <input type="text" placeholder="password" name="password" required\><br>
+        <% if (locals.response) { %>
+         <p><%= response %></p>
+        <% } %>
+        <button type="submit">Sign up</button>
+    </form>
+</body>
+</html>
