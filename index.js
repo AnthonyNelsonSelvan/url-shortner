@@ -3,12 +3,14 @@ const express = require("express");
 const app = express()
 const port = 3000;
 const path = require("path")
+const cookieParser = require('cookie-parser')
 
 //custom imports
 const connectMongoose = require("./connection/url")
 const urlRouter = require("./routes/url")
 const staticRoute = require("./routes/staticRoute")
 const userRoute = require("./routes/user")
+const {handleAllowLoggedInUserOnly} = require("./middleware/auth")
 
 //function from connection folder
 connectMongoose("mongodb://127.0.0.1:27017/url-shortner")
@@ -16,9 +18,10 @@ connectMongoose("mongodb://127.0.0.1:27017/url-shortner")
 //middlewares
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(cookieParser())
 
 //routes
-app.use("/url", urlRouter)
+app.use("/url",handleAllowLoggedInUserOnly, urlRouter)
 app.use("/", staticRoute)
 app.use("/user", userRoute)
 
