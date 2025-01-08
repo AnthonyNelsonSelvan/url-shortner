@@ -13,4 +13,13 @@ async function handleAllowLoggedInUserOnly(req,res,next){
     next()
 }
 
-module.exports = {handleAllowLoggedInUserOnly}
+async function handleChackAuth(req,res,next){
+    const userid = req.cookies.uid;
+
+    const user = await getUser(userid)
+
+    req.user = user;
+    next()
+}
+
+module.exports = {handleAllowLoggedInUserOnly,handleChackAuth}

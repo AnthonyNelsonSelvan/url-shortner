@@ -7,7 +7,7 @@ async function handleUserSignUp(req,res){
     await User.create({
         name,
         password,
-        email
+        email,
     })
 
     return res.render("home")

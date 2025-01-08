@@ -10,9 +10,10 @@ async function handleCreateShortUrl(req, res) {
     shortURL: shortid,
     redirectUrl: req.body.url,
     visitHistory: [],
+    createdBy : req.user._id,
   });
   if (result) {
-    res.redirect(`/success?id=${result.shortURL}`);
+    res.redirect('/test');
   }
 }
 async function handleGetUrl(req, res) {
