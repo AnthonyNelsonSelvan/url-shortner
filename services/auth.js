@@ -3,11 +3,13 @@ const secret = "Nelson234$!";
 
 function setUser(user) {
   return jwt.sign(
+    //payload
     {
       id: user._id,
       email: user.email,
       name : user.name
     },
+    //secret key (like stamp on a form)
     secret
   );
 }

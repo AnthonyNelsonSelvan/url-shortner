@@ -4,7 +4,7 @@ const User = require("../model/user");
 
 const router = express.Router();
 
-router.get("/test", async (req, res) => {
+router.get("/", async (req, res) => {
   if (!req.user) return res.redirect("/login");
   const allUrl = await URL.find({ createdBy: req.user.id });
   const user = await User.findOne({ name: req.user.name });

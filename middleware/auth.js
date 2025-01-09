@@ -1,25 +1,17 @@
 const {getUser} = require("../services/auth")
 
-async function handleAllowLoggedInUserOnly(req,res,next){
-    const userid = req.cookies?.uid;
-    if(!userid){
-        return res.redirect("/login")
-    }
-    const user = getUser(userid)
-    if(!user){
-        return res.redirect("/login")
-    }
-    req.user = user;
-    next()
+function checkForAuthentication(req, res ,next) {
+    const authorizationHeaderValue = req.headers["authorization"];
+    req.user= null;
+    if (
+        !authorizationHeaderValue || 
+        !authorizationHeaderValue.startsWith("Bearer")
+    ) 
+        return next();
+    const token = authorizationHeaderValue.split("Bearer ")[1];
+    const user = getUser(token);
+    req.user=user;
+    return next();
 }
 
-async function handleCheckAuth(req,res,next){
-    const userid = req.cookies.uid;
-
-    const user = getUser(userid)
-
-    req.user = user;
-    next()
-}
-
-module.exports = {handleAllowLoggedInUserOnly,handleCheckAuth}
+module.exports = {checkForAuthentication}
