@@ -1,7 +1,7 @@
 //imports
 const express = require("express");
 const app = express()
-const port = 3000;
+const port = 800;
 const path = require("path")
 const cookieParser = require('cookie-parser')
 
@@ -10,7 +10,7 @@ const connectMongoose = require("./connection/url")
 const urlRouter = require("./routes/url")
 const staticRoute = require("./routes/staticRoute")
 const userRoute = require("./routes/user")
-const {handleAllowLoggedInUserOnly,handleChackAuth} = require("./middleware/auth")
+const {handleAllowLoggedInUserOnly,handleCheckAuth} = require("./middleware/auth")
 
 //function from connection folder
 connectMongoose("mongodb://127.0.0.1:27017/url-shortner")
@@ -22,7 +22,7 @@ app.use(cookieParser())
 
 //routes
 app.use("/url",handleAllowLoggedInUserOnly, urlRouter)
-app.use("/",handleChackAuth, staticRoute)
+app.use("/",handleCheckAuth, staticRoute)
 app.use("/user", userRoute)
 
 //view engine

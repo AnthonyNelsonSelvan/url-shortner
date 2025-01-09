@@ -1,29 +1,25 @@
 const express = require("express");
-const {handleCreateShortUrl} = require("../controller/url")
-const URL = require("../model/url")
+const URL = require("../model/url");
+const User = require("../model/user");
 
-const router = express.Router()
+const router = express.Router();
 
+router.get("/test", async (req, res) => {
+  if (!req.user) return res.redirect("/login");
+  const allUrl = await URL.find({ createdBy: req.user.id });
+  const user = await User.findOne({ name: req.user.name });
+  const {id} = req.query;
+  return res.render("home", {
+    urls: allUrl,
+    user: user,
+    id : id
+  });
+});
+router.get("/signUp", (req, res) => {
+  return res.render("signUp");
+});
+router.get("/login", (req, res) => {
+  return res.render("login");
+});
 
-// router.get("/success", async (req,res) => {
-//     const allUrl = await URL.find({})
-//     const {id} =req.query;
-//     res.render("home",{id ,urls : allUrl,})
-// })
-
-//route for pages
-router.get('/test',async (req,res) => {
-    if(!req.user) return res.redirect("/login")
-    const allUrl = await URL.find({createdBy : req.user._id})
-    return res.render('home',{
-        urls : allUrl,
-    })
-})
-router.get('/signUp', (req,res) =>{
-    return res.render("signUp")
-})
-router.get('/login',(req,res) =>{
-    return res.render("login")
-})
-
-module.exports= router;
+module.exports = router;

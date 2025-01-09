@@ -10,10 +10,10 @@ async function handleCreateShortUrl(req, res) {
     shortURL: shortid,
     redirectUrl: req.body.url,
     visitHistory: [],
-    createdBy : req.user._id,
+    createdBy : req.user.id,
   });
   if (result) {
-    res.redirect('/test');
+    return res.redirect(`/test?id=${result.shortURL}`);
   }
 }
 async function handleGetUrl(req, res) {
@@ -37,20 +37,7 @@ async function handleGetUrl(req, res) {
     console.log(err);
   }
 }
-// async function handleGetUrlAdress(req, res) {
-//   const result = await URL.findOne({ shortURL: req.params.shortUrl });
-//   if (!result) {
-//     return res.status(404).send("Short URL not found");
-//   }
-//   return res.send(result.redirectUrl);
-// } // not working
-async function handleDeleteUrl(req, res) {
-  await URL.findOneAndDelete({ shortURL: req.params.shortUrl });
-  return res.json({ status: "deleted succesfully" });
-}
 module.exports = {
   handleCreateShortUrl,
   handleGetUrl,
-  // handleGetUrlAdress,
-  handleDeleteUrl,
 };
