@@ -13,7 +13,8 @@ async function handleCreateShortUrl(req, res) {
     createdBy : req.user.id,
   });
   if (result) {
-    return res.redirect(`/test?id=${result.shortURL}`);
+    //this id which is sent as query is passed to the ejs through static url
+    return res.redirect(`/?id=${result.shortURL}`);
   }
 }
 async function handleGetUrl(req, res) {

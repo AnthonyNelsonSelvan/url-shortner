@@ -7,7 +7,8 @@ function setUser(user) {
     {
       id: user._id,
       email: user.email,
-      name : user.name
+      name : user.name,
+      role : user.role
     },
     //secret key (like stamp on a form)
     secret
@@ -19,7 +20,7 @@ function getUser(id) {
     let decoded = jwt.verify(id,secret)
     return decoded
   } catch (error) {
-    return null
+    console.log(error)
   }
 }
 

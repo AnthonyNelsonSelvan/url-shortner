@@ -10,7 +10,7 @@ const connectMongoose = require("./connection/url")
 const urlRouter = require("./routes/url")
 const staticRoute = require("./routes/staticRoute")
 const userRoute = require("./routes/user")
-const {checkForAuthentication} = require("./middleware/auth")
+const {checkForAuthentication,onlyAccessibleBy} = require("./middleware/auth")
 
 //function from connection folder
 connectMongoose("mongodb://127.0.0.1:27017/url-shortner")
@@ -19,10 +19,11 @@ connectMongoose("mongodb://127.0.0.1:27017/url-shortner")
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
+app.use(checkForAuthentication)
 
 //routes
-app.use("/url",checkForAuthentication, urlRouter)
-app.use("/",checkForAuthentication, staticRoute)
+app.use("/url",onlyAccessibleBy(['NORMAL','ADMIN']), urlRouter)
+app.use("/", staticRoute)
 app.use("/user", userRoute)
 
 //view engine
