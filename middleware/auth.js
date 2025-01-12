@@ -4,7 +4,7 @@ function checkForAuthentication(req, res, next) {
   const tokenValue = req.cookies?.token;
   req.user = null;
   if (!tokenValue) return next();
-  //will return the value of the token which was stored
+  //will return the value of the token which was used to create jwt token
   const user = getUser(tokenValue);
   //assigning user to req.user to use it later
   req.user = user;
